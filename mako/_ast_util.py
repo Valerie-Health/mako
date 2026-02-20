@@ -46,6 +46,7 @@ from _ast import RShift
 from _ast import Sub
 from _ast import UAdd
 from _ast import USub
+from ast import dump
 
 
 BOOLOP_SYMBOLS = {And: "and", Or: "or"}
