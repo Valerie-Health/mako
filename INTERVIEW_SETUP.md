@@ -18,11 +18,8 @@ sudo apt-get install -y python3-venv
 
 ## 2) Clone and open the project
 
-```bash
-git clone <repo-url>
-cd mako
-code .
-```
+- clone down or copy the repository
+- navigate to and open the project
 
 ## 3) Create a virtual environment and install dependencies
 
