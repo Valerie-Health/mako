@@ -524,9 +524,6 @@ class SourceGenerator(NodeVisitor):
     def visit_NameConstant(self, node):
         self.write(str(node.value))
 
-    def visit_arg(self, node):
-        self.write(node.arg)
-
     def visit_Str(self, node):
         self.write(repr(node.s))
 

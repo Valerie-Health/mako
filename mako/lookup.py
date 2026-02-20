@@ -247,7 +247,7 @@ class TemplateLookup(TemplateCollection):
                 # on POSIX and cannot be used.
                 dir_ = dir_.replace(os.path.sep, posixpath.sep)
                 srcfile = posixpath.normpath(posixpath.join(dir_, u))
-                if os.path.isfile(srcfile):
+                if os.path.exists(srcfile):
                     return self._load(srcfile, uri)
             else:
                 raise exceptions.TopLevelLookupException(
