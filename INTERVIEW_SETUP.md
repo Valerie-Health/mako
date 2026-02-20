@@ -1,12 +1,13 @@
 # Interview Candidate Setup (macOS + Linux)
 
-This guide gets you from a fresh clone to debugging tests in VS Code (or Cursor) quickly.
+This guide gets you from a fresh clone to running and debugging tests quickly.
+
+The core setup is editor-agnostic and works from any terminal. A separate optional section is included for VS Code/Cursor users.
 
 ## 1) Prerequisites
 
 - Git
 - Python 3.8+ (`python3 --version`)
-- VS Code
 
 Linux note: if `venv` is missing, install it first:
 
@@ -16,10 +17,12 @@ sudo apt-get update
 sudo apt-get install -y python3-venv
 ```
 
-## 2) Clone and open the project
+## 2) Clone the project
 
-- clone down the repository
-- navigate to and open the project
+```bash
+git clone <repo-url>
+cd mako
+```
 
 ## 3) Create a virtual environment and install dependencies
 
@@ -34,20 +37,7 @@ python -m pip install -e ".[testing]"
 
 Why `".[testing]"`? It installs this package plus the optional test dependencies defined in `setup.cfg`.
 
-## 4) Configure VS Code once
-
-1. Install extensions:
-   - `Python` (ms-python.python)
-   - `Python Debugger` (ms-python.debugpy)
-2. Select interpreter:
-   - `Cmd/Ctrl+Shift+P` -> `Python: Select Interpreter`
-   - Choose `.venv/bin/python`
-3. Refresh tests:
-   - `Cmd/Ctrl+Shift+P` -> `Testing: Refresh Tests`
-
-This repo already includes `.vscode/settings.json` and `.vscode/launch.json` for pytest + debugging.
-
-## 5) Run tests
+## 4) Run tests from terminal (works in any editor)
 
 Run all tests in this file:
 
@@ -61,17 +51,31 @@ Run one specific test:
 python -m pytest test/test_lookup.py::LookupTest::test_directory_lookup -vv
 ```
 
-## 6) Debug a failing test in VS Code
+## 5) Debugging options (editor-agnostic)
 
-Two easy options:
+You can always use `pytest` output and add temporary print/logging statements while investigating failures.
 
-- Inline CodeLens in `test/test_lookup.py`:
-  - Click `Debug Test` above the test function.
-- Run and Debug panel:
-  - Use `Pytest: test_directory_lookup` (single test), or
+If you prefer step-through debugging with breakpoints, use your editor's Python debugger and run the same test commands above.
+
+## 6) Optional: VS Code/Cursor setup
+
+If you are using VS Code or Cursor, this repo already includes `.vscode/settings.json` and `.vscode/launch.json`.
+
+1. Install extensions:
+   - `Python` (`ms-python.python`)
+   - `Python Debugger` (`ms-python.debugpy`)
+2. Select interpreter:
+   - `Cmd/Ctrl+Shift+P` -> `Python: Select Interpreter`
+   - Choose `.venv/bin/python`
+3. Refresh tests:
+   - `Cmd/Ctrl+Shift+P` -> `Testing: Refresh Tests`
+
+To debug in VS Code/Cursor:
+
+- Inline CodeLens in `test/test_lookup.py`: click `Debug Test` above a test.
+- Or use Run and Debug configs:
+  - `Pytest: test_directory_lookup` (single test)
   - `Pytest: test_lookup.py` (whole file)
-
-Set breakpoints in either test code or library code (for example `mako/lookup.py`) and press `F5`.
 
 ## Troubleshooting
 
@@ -84,7 +88,7 @@ Set breakpoints in either test code or library code (for example `mako/lookup.py
     source .venv/bin/activate
     python -m pip install -e ".[testing]"
     ```
-- `launch.json` shows "property not allowed"
-  - Install/enable both VS Code extensions above, then reload window.
-- Tests not appearing in Testing panel
+- VS Code/Cursor: `launch.json` shows "property not allowed"
+  - Install/enable both Python extensions above, then reload window.
+- VS Code/Cursor: tests not appearing in Testing panel
   - Confirm interpreter is `.venv/bin/python`, then run `Testing: Refresh Tests`.
